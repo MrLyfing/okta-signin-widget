@@ -50,6 +50,12 @@ import ChallengeWebauthnView from './views/webauthn/ChallengeWebauthnView';
 import RequiredFactorEmailView from './views/email/RequiredFactorEmailView';
 import ChallengeAuthenticatorEmailView from './views/email/ChallengeAuthenticatorEmailView';
 
+//app/ov
+import EnrollAuthenticatorOVPollView from './views/ov/EnrollAuthenticatorOVPollView';
+import EnrollOVSwitchChannelView from './views/ov/EnrollOVSwitchChannelView';
+import EnrollOVWithEmailChannelView from './views/ov/EnrollOVWithEmailChannelView';
+import EnrollOVWithSmsChannelView from './views/ov/EnrollOVWithSmsChannelView';
+
 const DEFAULT = '_';
 
 const VIEWS_MAPPING = {
@@ -94,7 +100,19 @@ const VIEWS_MAPPING = {
     password: EnrollAuthenticatorPasswordView,
     'security_key': EnrollWebauthnView,
     phone: EnrollAuthenticatorPhoneView,
-    'security_question': EnrollAuthenticatorSecurityQuestion
+    'security_question': EnrollAuthenticatorSecurityQuestion,
+  },
+  'enroll-poll': {
+    app: EnrollAuthenticatorOVPollView,
+  },
+  'enroll-with-another-channel': {
+    app: EnrollOVSwitchChannelView,
+  },
+  'enroll-with-email': {
+    app: EnrollOVWithEmailChannelView,
+  },
+  'enroll-with-sms': {
+    app: EnrollOVWithSmsChannelView,
   },
   // Expired scenarios for authenticators..
   [RemediationForms.REENROLL_AUTHENTICATOR]: {
@@ -145,8 +163,8 @@ module.exports = {
       Logger.warn(`Cannot find customized View for ${formName}.`);
       return BaseView;
     }
-    const View = config[authenticatorType] || config[DEFAULT];
 
+    const View = config[authenticatorType] || config[DEFAULT];
     if (!View) {
       Logger.warn(`Cannot find customized View for ${formName} + ${authenticatorType}.`);
       return BaseView;

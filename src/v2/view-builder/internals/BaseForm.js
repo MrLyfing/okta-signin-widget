@@ -1,4 +1,4 @@
-import { Form, loc } from 'okta';
+import { _, Form, loc } from 'okta';
 import FormInputFactory from './FormInputFactory';
 
 export default Form.extend({
@@ -58,9 +58,7 @@ export default Form.extend({
       return;
     }
     if (input.View) {
-      this.add(input.View, {
-        options: input.options
-      });
+      this.add(input.View, _.omit(input, 'View'));
     } else {
       this.addInput(input);
     }
